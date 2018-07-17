@@ -17,17 +17,17 @@ func (controller GithubController) Init(e *echo.Echo) {
 }
 
 func (controller GithubController) GetUserInfoFromRepo(ctx echo.Context) error {
-	query := struct{
+	query := new(struct{
 		Owner string  `query:"owner"`
 		Repo  string  `query:"repo"`
 		Size  int     `query:"size"`
 		Sort  string  `query:"sort"`
-	}{
-		"rails",
-		"rails",
-		100,
-		"PushEvent",
-	}
+	})
+
+	query.Owner = "rails"
+	query.Repo = "rails"
+	query.Size = 100
+	query.Sort = "PushEvent"
 
 	if err := ctx.Bind(query); err != nil {
 		return ctx.NoContent(http.StatusBadRequest)
