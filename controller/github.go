@@ -1,12 +1,12 @@
 package controller
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/labstack/echo"
+	"io/ioutil"
 	"net/http"
 	"server/model"
-	"encoding/json"
-	"io/ioutil"
-	"fmt"
 	"sort"
 )
 
@@ -17,11 +17,11 @@ func (controller GithubController) Init(e *echo.Echo) {
 }
 
 func (controller GithubController) GetUserInfoFromRepo(ctx echo.Context) error {
-	query := new(struct{
-		Owner string  `query:"owner"`
-		Repo  string  `query:"repo"`
-		Size  int     `query:"size"`
-		Sort  string  `query:"sort"`
+	query := new(struct {
+		Owner string `query:"owner"`
+		Repo  string `query:"repo"`
+		Size  int    `query:"size"`
+		Sort  string `query:"sort"`
 	})
 
 	query.Owner = "rails"
@@ -74,7 +74,7 @@ func (GithubController) GetUsersFromInfo(info map[string]map[string]int) []map[s
 
 	for user, events := range info {
 		users = append(users, map[string]interface{}{
-			"login": user,
+			"login":  user,
 			"events": events,
 		})
 	}

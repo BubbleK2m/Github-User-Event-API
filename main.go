@@ -1,17 +1,15 @@
 package main
 
 import (
-	"github.com/labstack/echo"
-	"server/controller"
-	"github.com/labstack/echo/middleware"
 	"fmt"
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	"server/config"
+	"server/controller"
 )
 
 func main() {
 	e := echo.New()
-
-	e.Use(middleware.CORS())
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "method=${method}, uri=${uri}, status=${status}\n",
 	}))
