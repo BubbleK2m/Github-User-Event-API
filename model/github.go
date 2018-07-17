@@ -8,3 +8,8 @@ type GithubEvent struct {
 type GithubActor struct {
 	Name string `json:"login"`
 }
+
+type GithubUser struct {
+	Name   string         `json:"login"`
+	Events map[string]int `json:"events"`
+}

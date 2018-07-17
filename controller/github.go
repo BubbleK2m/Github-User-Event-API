@@ -69,24 +69,21 @@ func (GithubController) GetUserInfoFromEvents(events []model.GithubEvent) map[st
 	return info
 }
 
-func (GithubController) GetUsersFromInfo(info map[string]map[string]int) []map[string]interface{} {
-	users := make([]map[string]interface{}, 0)
+func (GithubController) GetUsersFromInfo(info map[string]map[string]int) []model.GithubUser {
+	users := make([]model.GithubUser, 0)
 
 	for user, events := range info {
-		users = append(users, map[string]interface{}{
-			"login":  user,
-			"events": events,
+		users = append(users, model.GithubUser{
+			Name: user,
+			Events: events,
 		})
 	}
 
 	return users
 }
 
-func (GithubController) SortUsersByEvent(users []map[string]interface{}, key string) {
+func (GithubController) SortUsersByEvent(users []model.GithubUser, key string) {
 	sort.Slice(users, func(l, r int) bool {
-		left := users[l]["events"].(map[string]int)
-		right := users[r]["events"].(map[string]int)
-
-		return left[key] > right[key]
+		return users[l].Events[key] > users[r].Events[key]
 	})
 }
